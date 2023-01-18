@@ -1,0 +1,222 @@
+Automação Em Python
+Jupyter
+
+Escrever passo a passo do que eu quero fazer
+
+instalar
+biblioteca pyautogui -----> biblioteca para automação
+biblioteca pyperclip -----> biblioteca para copiar e colar
+biblioteca time ----------> biblioteca de controle de tempo
+biblioteca pandas --------> biblioteca para integrar com office excel
+bibioteca os -------------> pesquisar
+
+
+
+import pyautogui
+	ou
+import pyatogui as pt
+import pyperclip as pc
+import pandas as pd
+import time as tm
+
+pyautogui. ou pt.--> função(click, write, press, hotkey etc)
+	.PAUSE = 'segundos'
+	.position
+
+pandas. ou pd.
+	.read_'TipoDeArquivoOuTab'(r"LocalDoArquivo")
+	o "r" no local do arquivo faz ignorar o \ que é um caracter reservado do python
+
+pt.hotkey("ctrl", "t")
+pc.copy("link")
+pt.hotkey("ctrl", "v")
+pt.press("enter")
+
+tm.sleep(5) ------> pausa o programa por um quantidade de segundos
+
+
+tabela = pandas.read_'TipoDeArquivoOuTab'(r"LocalDoArquivo")
+display(tabela)
+
+faturamento = tabela["nomeDaTabela"].sum()     .sum() = soma
+quantidade = tabela["nomeDaTabela"].sum()
+
+print(faturamento)
+print(quantidade)
+
+
+""" texto
+	com quebra
+de linha 
+		e formatação"""
+
+texto = f""" faturamento: {fatoramento:,.2f}       
+quantidade: {quantidade:,.2f} """
+f antes dos """ é para desbloquear o uso de variaveis
+: para declarar algo
+, para separar os milhares
+. para decimal
+2f quantidade de casas decimais
+
+
+
+
+
+	<====================== Aula 2 ======================>
+
+Primeiro passo: Fazer passo a passo do que voce terá que fazer
+Segundo passo: Analizar com cuidado e entender o que o desafio te pede
+
+* Ao trabalhar com Dados no python, a melhor biblioteca é o PANDAS *
+
+bibliotecas:
+	pandas -------> analise de dados
+	plotly -------> analise e criação de gráficos
+	
+import pandas as pd
+import plotly.express as px
+
+ler arquivo .csv (base de dados) que deve se encontrar na mesma pasta do arquivo do projeto
+
+IMPORTATE: Na análise de dados, informações que NÃO te ajudam, te atrapalham, 
+	então ao analisar um banco de dados, ignore ou oculte informações que não te ajudam
+
+Excluir informações da tabela:  .drop('nome do que vai ser excluido', axis = 0/1 '0 para linha, 1 para coluna')
+	tabela = pandas.read...'documento'
+	tabela = tabela.drop('Unnamed: 0', axis = 1)
+				
+				.dropna(how = 'tipo', axis = 0/1) ----> Analiza o banco de dados e exclui valores vazios
+					tipo:
+					'all' = exclui linha/coluna com todos os valores valores vazios
+					'any' = exclui linha/coluna que tenha algum valor vazio (ao menos 1 valor vazio)
+
+Selecionar uma coluna na tabela: []
+	tabela['nome exato da coluna']
+
+Converter tipo de coluna: .to_'tipo'('quem vai ser convertido')		 'numeric, datetime..'
+	tabela['nome exato da coluna'] = pd.to_numeric(tabela['nome exato da coluna'])
+
+Como tratar erros: ^, errors = 'tipo' 		
+	tipo:
+		'ignore' = ignora o erro e avança
+		'raise' = exibe o erro 
+		'coerce' = força a converção, o que não puder ser convertido fica vazio
+	tabela['nome exato da coluna'] = pd.to_numeric(tabela['nome exato da coluna'], errors = 'tipo')			 
+ 	
+Valores vazios:
+	NaN = Not a Number
+	* Colunas com todos os valores vazios, não servem de nada, excluir
+   Linhas:
+	* Excluir linhas que tem pelo menos 1 valor vazio (pois não agregara positivamente ao tirar a média)
+
+Cálculos na tabela: .tipo
+			tipos:
+			sum = soma
+			mean = média
+			value_counts = conta a quantidade de cada valor 
+	tabela['nome da coluna'].value_counts()	
+
+  * (normalize  = True) -> transforma os valores em porcentagem	
+	tabela['nome da coluna'].value_counts(normalize  = True)	
+
+  * .map('{codigo de formatação}'.format) -> formatação das porcentagens
+	tabela['nome da coluna'].value_counts(normalize  = True).map('{:.1%}'.format)
+		{} e : = indica que quer formatar
+		. = casa decimal
+		1 = quantidade de casas decimais
+		% = indica que é em percentual
+	
+Graficos:
+	grafico = px.'tipo de grafico'()  
+			tipos:
+			histogram = usados para dados numéricos, estatíticos
+			bar = usado para dados categóricos
+			pie = pizza ...
+	
+	grafico = px.histogram('nome da tabela', x = 'nome da coluna que ficara no eixo x do gráfico', color = 'nome da coluna de comparação', text_auto = True)
+				text_auto = True -> ativa os números dentro dos gráficos
+
+
+Para cada coluna em minha tablea, crie um grafico:
+	for coluna in tabela.columns:
+   		grafico = px.histogram(tabela, x = coluna, color = 'Churn', text_auto = True)
+    		grafico.show()
+
+
+* Ao analisar tabelas, procure sempre informações que saltam os olhos *
+
+
+
+
+	<====================== Aula 3 ======================>
+Passo 1 : Criar passo a passo
+
+Biblioteca:
+	Selenium  -------> Pacote de códigos do python usado na automação web, cria um próprio navegador onde ele controla tudo que acontece
+		webdriver
+		selenium.webdriver.common.keys
+	* !pip install selenium
+	* Necessário baixar o webdriver:
+		Chrome -> chromedriver
+		Firefox -> geckodriver
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+Criar um navegador selenium: webdriver.'Navegador'()
+	navegador = webdriver.Chrome()
+
+Navegar para uma pagina: .get('url')        -> Get navegara para a página da url
+	navegador.get('https://www.google.com.br/')
+
+Selecionar a barra de pesquisa do google:
+	navegador.find_element('xpath', 'endereço xpath').send_keys('o que quer pesquisar')
+		.find_elements -> função de encontrar um elemento no navegador, botoes, caixas de texto etc
+		'xpath' -> inspecionar, seleção para inpecionar (icone de mouse), seleciona o elemento, botao direito no html do elemento, copy, copy xpath
+		.send_keys -> digita algo
+
+	navegador.find_element('xpath', 'endereço xpath').send_keys(Keys.ENTER)     -> pressiona o enter
+
+	cotacao_euro = navegador.find_element('xpath', 'endereço xpath').get_attribute('nome do atributo')
+		.get_attribute -> pega o valor de um atributo hrml
+
+Localizar linhas e colunas para editar:
+	tabela.loc[linha, coluna] = ...
+	tabela.loc[tabela['Moeda'] == 'Dólar', 'Cotação'] = float(cotacao_dolar)
+
+Exportar arquivo 
+	'nome da tabela'.to_'tipo de arquivo'('nome do arquivo.extensão', index = False)
+		index -> numeros de identificação de linhas adicionados pelo python
+
+	tabela.to_excel('Produtos Novo.xlsx', index = False)   
+	* prefira um nome diferente do arquivo original para evitar dbstituições
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

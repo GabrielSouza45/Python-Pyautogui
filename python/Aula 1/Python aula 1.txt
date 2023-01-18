@@ -1,0 +1,59 @@
+Automação Em Python
+Jupyter
+
+Escrever passo a passo do que eu quero fazer
+
+instalar
+biblioteca pyautogui -----> biblioteca para automação
+biblioteca pyperclip -----> biblioteca para copiar e colar
+biblioteca time ----------> biblioteca de controle de tempo
+biblioteca pandas --------> biblioteca para integrar com office excel
+bibioteca os -------------> pesquisar
+
+
+
+import pyautogui
+	ou
+import pyatogui as pt
+import pyperclip as pc
+import pandas as pd
+import time as tm
+
+pyautogui. ou pt.--> função(click, write, press, hotkey etc)
+	.PAUSE = 'segundos'
+	.position
+
+pandas. ou pd.
+	.read_'TipoDeArquivoOuTab'(r"LocalDoArquivo")
+	o "r" no local do arquivo faz ignorar o \ que é um caracter reservado do python
+
+pt.hotkey("ctrl", "t")
+pc.copy("link")
+pt.hotkey("ctrl", "v")
+pt.press("enter")
+
+tm.sleep(5) ------> pausa o programa por um quantidade de segundos
+
+
+tabela = pandas.read_'TipoDeArquivoOuTab'(r"LocalDoArquivo")
+display(tabela)
+
+faturamento = tabela["nomeDaTabela"].sum()     .sum() = soma
+quantidade = tabela["nomeDaTabela"].sum()
+
+print(faturamento)
+print(quantidade)
+
+
+""" texto
+	com quebra
+de linha 
+		e formatação"""
+
+texto = f""" faturamento: {fatoramento:,.2f}       
+quantidade: {quantidade:,.2f} """
+f antes dos """ é para desbloquear o uso de variaveis
+: para declarar algo
+, para separar os milhares
+. para decimal
+2f quantidade de casas decimais
